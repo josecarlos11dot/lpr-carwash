@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>LPR - Lector de Placas</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    background: #0a0a0a;
+    color: #f0f0f0;
+    min-height: 100vh;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  .header {
+    background: #111;
+    border-bottom: 1px solid #222;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .header-icon {
+    width: 32px; height: 32px;
+    background: #1a6ef5;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  .header h1 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .header p {
+    font-size: 12px;
+    color: #666;
+  }
+
+  .content {
+    padding: 20px 16px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* API KEY SECTION */
+  .api-section {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .api-section label {
+    font-size: 12px;
+    color: #888;
+    display: block;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .api-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .api-section input {
+    flex: 1;
+    background: #0a0a0a;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 11px 14px;
+    color: #fff;
+    font-size: 14px;
+    font-family: 'SF Mono', monospace;
+    outline: none;
+  }
+
+  .api-section input:focus {
+    border-color: #1a6ef5;
+  }
+
+  .btn-save {
+    background: #1a6ef5;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 16px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .api-status {
+    font-size: 12px;
+    margin-top: 8px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    display: none;
+  }
+
+  .api-status.ok { background: #0d2a1a; color: #3dd68c; display: block; }
+  .api-status.err { background: #2a0d0d; color: #ff6b6b; display: block; }
+
+  /* PREVIEW */
+  .preview-box {
+    background: #141414;
+    border: 1px dashed #333;
+    border-radius: 14px;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .preview-box img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 13px;
+    display: none;
+  }
+
+  .preview-placeholder {
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .preview-placeholder .icon { font-size: 40px; margin-bottom: 6px; }
+  .preview-placeholder p { font-size: 13px; color: #555; }
+
+  /* BUTTONS */
+  .btn-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .btn-capture {
+    background: #141414;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 14px 10px;
+    color: #f0f0f0;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-capture:active { background: #1f1f1f; }
+
+  .btn-scan {
+    width: 100%;
+    background: #1a6ef5;
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+    opacity: 0.35;
+    -webkit-tap-highlight-color: transparent;
+    transition: opacity 0.2s;
+  }
+
+  .btn-scan:not(:disabled) { opacity: 1; }
+  .btn-scan:disabled { cursor: not-allowed; }
+  .btn-scan:active:not(:disabled) { opacity: 0.85; }
+
+  /* RESULT */
+  .result-card {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 14px;
+    padding: 18px;
+    display: none;
+    margin-bottom: 16px;
+  }
+
+  .result-label {
+    font-size: 11px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+  }
+
+  .plate-display {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .plate-number {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    font-family: 'SF Mono', 'Courier New', monospace;
+    color: #fff;
+  }
+
+  .confidence-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  .conf-alta { background: #0d2a1a; color: #3dd68c; }
+  .conf-media { background: #2a200d; color: #f5a623; }
+  .conf-baja { background: #2a0d0d; color: #ff6b6b; }
+
+  .notes-section {
+    border-top: 1px solid #222;
+    padding-top: 12px;
+  }
+
+  .notes-label {
+    font-size: 11px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+
+  .notes-text {
+    font-size: 13px;
+    color: #aaa;
+    line-height: 1.5;
+  }
+
+  /* LOG */
+  .log-section {
+    margin-top: 8px;
+  }
+
+  .log-title {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .log-entry {
+    background: #111;
+    border: 1px solid #1e1e1e;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .log-plate { font-size: 16px; font-weight: 600; font-family: monospace; letter-spacing: 2px; }
+  .log-time { font-size: 11px; color: #555; }
+
+  /* LOADING */
+  .loading-state {
+    text-align: center;
+    padding: 24px;
+    display: none;
+  }
+
+  .spinner {
+    width: 32px; height: 32px;
+    border: 3px solid #222;
+    border-top-color: #1a6ef5;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto 12px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-state p { font-size: 14px; color: #666; }
+
+  input[type="file"] { display: none; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">🚗</div>
+  <div>
+    <h1>LPR Test</h1>
+    <p>Lector de placas · Pruebas iPhone</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- API KEY -->
+  <div class="api-section">
+    <label>API Key de Anthropic</label>
+    <div class="api-row">
+      <input type="password" id="api-key" placeholder="sk-ant-..." autocomplete="off" />
+      <button class="btn-save" onclick="saveKey()">Guardar</button>
+    </div>
+    <div class="api-status" id="api-status"></div>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-box" onclick="document.getElementById('gallery-input').click()">
+    <div class="preview-placeholder" id="placeholder">
+      <div class="icon">📷</div>
+      <p>Toca para seleccionar imagen</p>
+    </div>
+    <img id="preview-img" alt="Vista previa" />
+  </div>
+
+  <!-- CAPTURE BUTTONS -->
+  <div class="btn-row">
+    <label>
+      <div class="btn-capture">
+        <span>📷</span> Cámara
+      </div>
+      <input type="file" accept="image/*" capture="environment" id="camera-input" />
+    </label>
+    <label>
+      <div class="btn-capture">
+        <span>🖼</span> Galería
+      </div>
+      <input type="file" accept="image/*" id="gallery-input" />
+    </label>
+  </div>
+
+  <!-- SCAN BUTTON -->
+  <button class="btn-scan" id="scan-btn" disabled onclick="scanPlate()">
+    🔍 Leer Placa
+  </button>
+
+  <!-- LOADING -->
+  <div class="loading-state" id="loading">
+    <div class="spinner"></div>
+    <p>Analizando imagen con IA...</p>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-card" id="result-card">
+    <div class="result-label">Placa detectada</div>
+    <div class="plate-display">
+      <span class="plate-number" id="plate-number">—</span>
+      <span class="confidence-badge" id="conf-badge"></span>
+    </div>
+    <div class="notes-section">
+      <div class="notes-label">Observaciones</div>
+      <div class="notes-text" id="notes-text"></div>
+    </div>
+  </div>
+
+  <!-- LOG -->
+  <div class="log-section" id="log-section" style="display:none;">
+    <div class="log-title">Historial de pruebas</div>
+    <div id="log-list"></div>
+  </div>
+
+</div>
+
+<script>
+  let imageBase64 = null;
+  let apiKey = localStorage.getItem('lpr_api_key') || '';
+  const log = [];
+
+  if (apiKey) {
+    document.getElementById('api-key').value = apiKey;
+    document.getElementById('api-status').textContent = '✓ API key guardada';
+    document.getElementById('api-status').className = 'api-status ok';
+  }
+
+  function saveKey() {
+    const val = document.getElementById('api-key').value.trim();
+    if (!val.startsWith('sk-ant-')) {
+      document.getElementById('api-status').textContent = 'La key debe empezar con sk-ant-';
+      document.getElementById('api-status').className = 'api-status err';
+      return;
+    }
+    apiKey = val;
+    localStorage.setItem('lpr_api_key', val);
+    document.getElementById('api-status').textContent = '✓ API key guardada correctamente';
+    document.getElementById('api-status').className = 'api-status ok';
+  }
+
+  function handleFile(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imageBase64 = e.target.result.split(',')[1];
+      const img = document.getElementById('preview-img');
+      img.src = e.target.result;
+      img.style.display = 'block';
+      document.getElementById('placeholder').style.display = 'none';
+      document.getElementById('scan-btn').disabled = false;
+      document.getElementById('result-card').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  document.getElementById('camera-input').addEventListener('change', e => handleFile(e.target.files[0]));
+  document.getElementById('gallery-input').addEventListener('change', e => handleFile(e.target.files[0]));
+
+  async function scanPlate() {
+    if (!imageBase64) return;
+    if (!apiKey) {
+      alert('Primero guarda tu API key de Anthropic');
+      return;
+    }
+
+    document.getElementById('result-card').style.display = 'none';
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('scan-btn').disabled = true;
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 500,
+          system: 'Eres un sistema especializado en reconocimiento de placas vehiculares de México. Analiza la imagen y extrae el número de placa. Responde SOLO en JSON sin backticks ni texto extra: {"plate":"TEXTO_PLACA","confidence":"alta|media|baja","notes":"observación breve en español"}. Si no hay placa visible: {"plate":"NO_DETECTADA","confidence":"baja","notes":"No se encontró placa en la imagen"}.',
+          messages: [{
+            role: 'user',
+            content: [
+              { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: imageBase64 } },
+              { type: 'text', text: 'Extrae el número de placa vehicular de esta imagen.' }
+            ]
+          }]
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error?.message || 'Error en API');
+      }
+
+      const raw = data.content?.find(b => b.type === 'text')?.text || '';
+      const parsed = JSON.parse(raw.replace(/```json|```/g, '').trim());
+
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('result-card').style.display = 'block';
+      document.getElementById('plate-number').textContent = parsed.plate || '—';
+      document.getElementById('notes-text').textContent = parsed.notes || '';
+
+      const badge = document.getElementById('conf-badge');
+      const conf = parsed.confidence || 'baja';
+      badge.textContent = conf === 'alta' ? '✓ Alta' : conf === 'media' ? '⚠ Media' : '✗ Baja';
+      badge.className = 'confidence-badge conf-' + conf;
+
+      if (parsed.plate && parsed.plate !== 'NO_DETECTADA') {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+        log.unshift({ plate: parsed.plate, time: timeStr, conf });
+        renderLog();
+      }
+
+    } catch (err) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('result-card').style.display = 'block';
+      document.getElementById('plate-number').textContent = 'ERROR';
+      document.getElementById('conf-badge').textContent = '';
+      document.getElementById('notes-text').textContent = err.message;
+    }
+
+    document.getElementById('scan-btn').disabled = false;
+  }
+
+  function renderLog() {
+    if (log.length === 0) return;
+    document.getElementById('log-section').style.display = 'block';
+    document.getElementById('log-list').innerHTML = log.slice(0, 10).map(e => `
+      <div class="log-entry">
+        <span class="log-plate">${e.plate}</span>
+        <span class="log-time">${e.time}</span>
+      </div>
+    `).join('');
+  }
+</script>
+</body>
+</html>
