@@ -450,7 +450,7 @@
           'anthropic-dangerous-direct-browser-access': 'true'
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
+          model: 'claude-sonnet-4-5',
           max_tokens: 500,
           system: 'Eres un sistema especializado en reconocimiento de placas vehiculares de México. Analiza la imagen y extrae el número de placa. Responde SOLO en JSON sin backticks ni texto extra: {"plate":"TEXTO_PLACA","confidence":"alta|media|baja","notes":"observación breve en español"}. Si no hay placa visible: {"plate":"NO_DETECTADA","confidence":"baja","notes":"No se encontró placa en la imagen"}.',
           messages: [{
