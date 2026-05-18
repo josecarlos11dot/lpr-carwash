@@ -490,12 +490,12 @@
       }
 
     } catch (err) {
-      document.getElementById('loading').style.display = 'none';
-      document.getElementById('result-card').style.display = 'block';
-      document.getElementById('plate-number').textContent = 'ERROR';
-      document.getElementById('conf-badge').textContent = '';
-      document.getElementById('notes-text').textContent = err.message;
-    }
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('result-card').style.display = 'block';
+  document.getElementById('plate-number').textContent = 'ERROR';
+  document.getElementById('conf-badge').textContent = '';
+  document.getElementById('notes-text').textContent = 'Detalle: ' + JSON.stringify(err.message) + ' | tipo: ' + err.name;
+}
 
     document.getElementById('scan-btn').disabled = false;
   }
