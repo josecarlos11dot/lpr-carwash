@@ -488,7 +488,7 @@
         log.unshift({ plate: parsed.plate, time: timeStr, conf });
         renderLog();
 
-        fetch('http://192.168.0.3:4000/api/registros/placa', {
+        fetch('https://d4e4-187-190-197-167.ngrok-free.app/api/registros/placa', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ 
