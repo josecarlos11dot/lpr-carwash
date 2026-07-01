@@ -489,19 +489,24 @@
         renderLog();
 
         fetch('http://192.168.0.3:4000/api/registros/placa', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-      placa: parsed.plate.replace(/[-\s]/g, '').toUpperCase(),
-      imagen: imageBase64 || ''
-    })
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ 
+    placa: parsed.plate.replace(/[-\s]/g, '').toUpperCase(),
+    imagen: imageBase64 || ''
   })
-  .then(r => r.json())
-  .then(data => console.log('Registro creado:', data.mensaje))
-  .catch(err => console.error('Error al registrar:', err))
+})
+.then(r => r.json())
+.then(data => {
+  alert('✅ Enviado: ' + data.mensaje)
+  console.log('Registro creado:', data.mensaje)
+})
+.catch(err => {
+  alert('❌ Error: ' + err.message)
+  console.error('Error al registrar:', err)
+})
 
-
-      }
+ }
 
     } catch (err) {
   document.getElementById('loading').style.display = 'none';
