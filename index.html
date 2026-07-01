@@ -493,7 +493,7 @@
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ 
     placa: parsed.plate.replace(/[-\s]/g, '').toUpperCase(),
-    imagen: imageBase64  ''
+    imagen: imageBase64 || ''
   })
 })
 .then(r => r.json())
