@@ -474,7 +474,7 @@
 
       document.getElementById('loading').style.display = 'none';
       document.getElementById('result-card').style.display = 'block';
-      document.getElementById('plate-number').textContent = parsed.plate || '—';
+      document.getElementById('plate-number').textContent = parsed.plate.replace(/[-\s]/g, '').toUpperCase() || '—';
       document.getElementById('notes-text').textContent = parsed.notes || '';
 
       const badge = document.getElementById('conf-badge');
@@ -487,6 +487,20 @@
         const timeStr = now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
         log.unshift({ plate: parsed.plate, time: timeStr, conf });
         renderLog();
+
+        fetch('http://localhost:4000/api/registros/placa', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+      placa: parsed.plate.replace(/[-\s]/g, '').toUpperCase(),
+      imagen: imageBase64 || ''
+    })
+  })
+  .then(r => r.json())
+  .then(data => console.log('Registro creado:', data.mensaje))
+  .catch(err => console.error('Error al registrar:', err))
+
+
       }
 
     } catch (err) {
