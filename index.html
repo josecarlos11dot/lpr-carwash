@@ -356,9 +356,9 @@
   </div>
 
   <!-- SCAN BUTTON -->
-  <button class="btn-scan" id="scan-btn" disabled onclick="scanPlate()">
-    🔍 Leer Placa
-  </button>
+<button class="btn-scan" id="scan-btn" disabled onclick="scanPlate()">
+  🔍 Leer Placa
+</button>
 
   <!-- LOADING -->
   <div class="loading-state" id="loading">
@@ -366,18 +366,21 @@
     <p>Analizando imagen con IA...</p>
   </div>
 
-  <!-- RESULT -->
-  <div class="result-card" id="result-card">
-    <div class="result-label">Placa detectada</div>
-    <div class="plate-display">
-      <span class="plate-number" id="plate-number">—</span>
-      <span class="confidence-badge" id="conf-badge"></span>
-    </div>
-    <div class="notes-section">
-      <div class="notes-label">Observaciones</div>
-      <div class="notes-text" id="notes-text"></div>
-    </div>
+ <!-- RESULT -->
+<div class="result-card" id="result-card">
+  <div class="result-label">Placa detectada</div>
+  <div class="plate-display">
+    <input id="plate-number" type="text" style="font-size:24px; font-weight:600; letter-spacing:0.1em; border:2px solid #185FA5; border-radius:8px; padding:8px 12px; width:100%; text-align:center; box-sizing:border-box;">
+    <span class="confidence-badge" id="conf-badge"></span>
   </div>
+  <div class="notes-section">
+    <div class="notes-label">Observaciones</div>
+    <div class="notes-text" id="notes-text"></div>
+  </div>
+  <button id="confirm-btn" style="display:none; width:100%; padding:14px; background:#185FA5; color:#fff; border:none; border-radius:8px; font-size:16px; font-weight:600; margin-top:12px; cursor:pointer;" onclick="registrarPlaca()">
+    ✅ Confirmar y registrar
+  </button>
+</div>
 
   <!-- LOG -->
   <div class="log-section" id="log-section" style="display:none;">
@@ -474,8 +477,9 @@
 
       document.getElementById('loading').style.display = 'none';
       document.getElementById('result-card').style.display = 'block';
-      document.getElementById('plate-number').textContent = parsed.plate.replace(/[-\s]/g, '').toUpperCase() || '—';
+      document.getElementById('plate-number').value = parsed.plate.replace(/[-\s]/g, '').toUpperCase() || '';
       document.getElementById('notes-text').textContent = parsed.notes || '';
+      document.getElementById('confirm-btn').style.display = 'block';
 
       const badge = document.getElementById('conf-badge');
       const conf = parsed.confidence || 'baja';
