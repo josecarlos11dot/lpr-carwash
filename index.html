@@ -448,7 +448,7 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': apiKey,  
+          'x-api-key': apiKey,
           'anthropic-version': '2023-06-01',
           'anthropic-dangerous-direct-browser-access': 'true'
         },
@@ -491,36 +491,39 @@
         const timeStr = now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
         log.unshift({ plate: parsed.plate, time: timeStr, conf });
         renderLog();
-
-        fetch('https://d4e4-187-190-197-167.ngrok-free.app/api/registros/placa', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ 
-    placa: parsed.plate.replace(/[-\s]/g, '').toUpperCase(),
-    imagen: imageBase64 || ''
-  })
-})
-.then(r => r.json())
-.then(data => {
-  alert('✅ Enviado: ' + data.mensaje)
-  console.log('Registro creado:', data.mensaje)
-})
-.catch(err => {
-  alert('❌ Error: ' + err.message)
-  console.error('Error al registrar:', err)
-})
-
- }
+      }
 
     } catch (err) {
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('result-card').style.display = 'block';
-  document.getElementById('plate-number').textContent = 'ERROR';
-  document.getElementById('conf-badge').textContent = '';
-  document.getElementById('notes-text').textContent = 'Detalle: ' + JSON.stringify(err.message) + ' | tipo: ' + err.name;
-}
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('result-card').style.display = 'block';
+      document.getElementById('plate-number').value = 'ERROR';
+      document.getElementById('conf-badge').textContent = '';
+      document.getElementById('notes-text').textContent = 'Detalle: ' + JSON.stringify(err.message) + ' | tipo: ' + err.name;
+    }
 
     document.getElementById('scan-btn').disabled = false;
+  }
+
+  function registrarPlaca() {
+    const placa = document.getElementById('plate-number').value.trim().toUpperCase()
+    if (!placa) {
+      alert('La placa está vacía')
+      return
+    }
+    fetch('https://d4e4-187-190-197-167.ngrok-free.app/api/registros/placa', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        placa,
+        imagen: imageBase64 || ''
+      })
+    })
+    .then(r => r.json())
+    .then(data => {
+      alert('✅ ' + data.mensaje)
+      document.getElementById('confirm-btn').style.display = 'none'
+    })
+    .catch(err => alert('❌ Error: ' + err.message))
   }
 
   function renderLog() {
