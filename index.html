@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,24 +11,24 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --void:#67718d;
-    --surface:#191a1e;
-    --surface-2:#212227;
-    --hairline:#2a2b30;
-    --amber:#ffc53d;
-    --amber-deep:#e6a80f;
-    --green:#35d07f;
-    --amber-dim:#5c4a17;
-    --red:#ff5c5c;
-    --text:#f2f1ec;
-    --muted:#8a8d93;
-    --muted-2:#5a5d63;
+  :root {
+    --void: #67718d;
+    --surface: #191a1e;
+    --surface-2: #212227;
+    --hairline: #2a2b30;
+    --amber: #ffc53d;
+    --amber-deep: #e6a80f;
+    --green: #35d07f;
+    --amber-dim: #5c4a17;
+    --red: #ff5c5c;
+    --text: #f2f1ec;
+    --muted: #8a8d93;
+    --muted-2: #5a5d63;
   }
-
+ 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: var(--void); }
-
+ 
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
     color: var(--text);
@@ -37,8 +38,8 @@
       radial-gradient(120% 60% at 50% -10%, rgba(255,197,61,0.06), transparent 60%),
       var(--void);
   }
-
-  /* HEADER --------------------------------------------------- */
+ 
+  /* HEADER */
   .header {
     padding: 18px 20px 14px;
     display: flex;
@@ -49,7 +50,6 @@
     z-index: 10;
     background: linear-gradient(180deg, var(--void) 70%, rgba(13,14,17,0));
   }
-
   .header-icon {
     width: 38px; height: 38px;
     background: var(--surface);
@@ -59,14 +59,13 @@
     font-size: 18px;
     position: relative;
   }
-  .header-icon::after{
-    content:"";
-    position:absolute; inset:-1px;
-    border-radius:9px;
-    border:1px solid transparent;
+  .header-icon::after {
+    content: "";
+    position: absolute; inset: -1px;
+    border-radius: 9px;
+    border: 1px solid transparent;
     box-shadow: 0 0 0 1px rgba(255,197,61,0.25);
   }
-
   .header h1 {
     font-family: 'Oswald', sans-serif;
     font-size: 18px;
@@ -75,52 +74,45 @@
     text-transform: uppercase;
     color: #fff;
   }
-
   .header p {
     font-size: 11px;
     color: var(--muted-2);
     letter-spacing: 0.02em;
     margin-top: 1px;
   }
-
-  .status-dot{
-    margin-left:auto;
-    width:8px; height:8px; border-radius:50%;
+  .status-dot {
+    margin-left: auto;
+    width: 8px; height: 8px; border-radius: 50%;
     background: var(--muted-2);
     box-shadow: 0 0 0 3px rgba(255,255,255,0.03);
     transition: background .2s, box-shadow .2s;
   }
-  .status-dot.on{ background: var(--green); box-shadow: 0 0 0 3px rgba(53,208,127,0.15); }
-
+  .status-dot.on { background: var(--green); box-shadow: 0 0 0 3px rgba(53,208,127,0.15); }
+ 
   .content {
     padding: 6px 16px 28px;
     max-width: 480px;
     margin: 0 auto;
   }
-
-  /* SECTION LABEL --------------------------------------------- */
-  .eyebrow{
-    font-family:'IBM Plex Mono', monospace;
+ 
+  /* SECTION LABEL */
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 10.5px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--muted-2);
     margin: 22px 2px 8px;
   }
-
-  /* API KEY SECTION -------------------------------------------- */
+ 
+  /* API KEY */
   .api-section {
     background: var(--surface);
     border: 1px solid var(--hairline);
     border-radius: 12px;
     padding: 14px;
   }
-
-  .api-row {
-    display: flex;
-    gap: 8px;
-  }
-
+  .api-row { display: flex; gap: 8px; }
   .api-section input {
     flex: 1;
     background: var(--void);
@@ -132,9 +124,7 @@
     font-family: 'IBM Plex Mono', monospace;
     outline: none;
   }
-
   .api-section input:focus { border-color: var(--amber-dim); }
-
   .btn-save {
     background: var(--surface-2);
     border: 1px solid var(--hairline);
@@ -146,8 +136,7 @@
     cursor: pointer;
     white-space: nowrap;
   }
-  .btn-save:active{ background: #2a2b30; }
-
+  .btn-save:active { background: #2a2b30; }
   .api-status {
     font-size: 11.5px;
     margin-top: 10px;
@@ -157,11 +146,10 @@
     font-family: 'IBM Plex Mono', monospace;
     letter-spacing: 0.02em;
   }
-
-  .api-status.ok { background: rgba(53,208,127,0.08); color: var(--green); display: flex; align-items:center; gap:6px; }
-  .api-status.err { background: rgba(255,92,92,0.08); color: var(--red); display: flex; align-items:center; gap:6px; }
-
-  /* VIEWFINDER --------------------------------------------------- */
+  .api-status.ok  { background: rgba(53,208,127,0.08); color: var(--green); display: flex; align-items: center; gap: 6px; }
+  .api-status.err { background: rgba(255,92,92,0.08);  color: var(--red);   display: flex; align-items: center; gap: 6px; }
+ 
+  /* VIEWFINDER */
   .viewfinder {
     position: relative;
     background:
@@ -179,61 +167,52 @@
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
   }
-
   .viewfinder:active .reticle { border-color: var(--amber); }
-
   .viewfinder img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
     object-fit: cover;
     display: none;
   }
-
-  .vf-dim{
-    position:absolute; inset:0;
+  .vf-dim {
+    position: absolute; inset: 0;
     background: rgba(0,0,0,0.35);
-    display:none;
+    display: none;
   }
-  .viewfinder.has-image .vf-dim{ display:block; }
-
-  .reticle{
+  .viewfinder.has-image .vf-dim { display: block; }
+  .reticle {
     position: relative;
-    width: 78%;
-    height: 96px;
+    width: 78%; height: 96px;
     border: 2px solid var(--hairline);
     border-radius: 10px;
     transition: border-color .15s;
   }
   .reticle::before, .reticle::after,
-  .reticle i::before, .reticle i::after { content:""; position:absolute; width:16px; height:16px; }
-  .reticle::before{ top:-2px; left:-2px; border-top:3px solid var(--amber); border-left:3px solid var(--amber); border-radius: 8px 0 0 0; }
-  .reticle::after{ top:-2px; right:-2px; border-top:3px solid var(--amber); border-right:3px solid var(--amber); border-radius: 0 8px 0 0; }
-  .reticle i::before{ bottom:-2px; left:-2px; border-bottom:3px solid var(--amber); border-left:3px solid var(--amber); border-radius: 0 0 0 8px; }
-  .reticle i::after{ bottom:-2px; right:-2px; border-bottom:3px solid var(--amber); border-right:3px solid var(--amber); border-radius: 0 0 8px 0; }
-
-  .scan-line{
-    position:absolute;
-    left:6%; right:6%; top:8px;
-    height:2px;
+  .reticle i::before, .reticle i::after { content: ""; position: absolute; width: 16px; height: 16px; }
+  .reticle::before   { top:-2px;    left:-2px;  border-top:3px    solid var(--amber); border-left:3px   solid var(--amber); border-radius: 8px 0 0 0; }
+  .reticle::after    { top:-2px;    right:-2px; border-top:3px    solid var(--amber); border-right:3px  solid var(--amber); border-radius: 0 8px 0 0; }
+  .reticle i::before { bottom:-2px; left:-2px;  border-bottom:3px solid var(--amber); border-left:3px   solid var(--amber); border-radius: 0 0 0 8px; }
+  .reticle i::after  { bottom:-2px; right:-2px; border-bottom:3px solid var(--amber); border-right:3px  solid var(--amber); border-radius: 0 0 8px 0; }
+  .scan-line {
+    position: absolute;
+    left: 6%; right: 6%; top: 8px;
+    height: 2px;
     background: linear-gradient(90deg, transparent, var(--amber), transparent);
-    opacity:0;
+    opacity: 0;
     z-index: 3;
   }
-  .scan-line.active{
-    opacity:1;
+  .scan-line.active {
+    opacity: 1;
     animation: sweep 1.1s ease-in-out infinite;
   }
-  @keyframes sweep{
-    0%{ top:8px; opacity:0; }
-    10%{ opacity:1; }
-    90%{ opacity:1; }
-    100%{ top: calc(100% - 10px); opacity:0; }
+  @keyframes sweep {
+    0%   { top: 8px; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { top: calc(100% - 10px); opacity: 0; }
   }
-
-  .vf-hint{
-    font-family:'IBM Plex Mono', monospace;
+  .vf-hint {
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11.5px;
     letter-spacing: 0.08em;
     color: var(--muted);
@@ -241,58 +220,36 @@
     position: relative;
     z-index: 2;
   }
-  .viewfinder.has-image .vf-hint{ color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
-
-  .gallery-fab{
-    position:absolute;
+  .viewfinder.has-image .vf-hint { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
+  .gallery-fab {
+    position: absolute;
     bottom: 12px; right: 12px;
     width: 40px; height: 40px;
     border-radius: 10px;
     background: rgba(10,10,12,0.65);
     border: 1px solid rgba(255,255,255,0.08);
-    display:flex; align-items:center; justify-content:center;
+    display: flex; align-items: center; justify-content: center;
     font-size: 17px;
     z-index: 4;
     -webkit-tap-highlight-color: transparent;
   }
-  .gallery-fab:active{ background: rgba(10,10,12,0.9); }
-
-  /* PRIMARY CTA --------------------------------------------------- */
-  .btn-scan {
-    width: 100%;
-    background: var(--amber);
-    border: none;
-    border-radius: 12px;
-    padding: 15px;
-    color: #14110a;
-    font-family:'Oswald', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    cursor: pointer;
-    margin-top: 12px;
-    -webkit-tap-highlight-color: transparent;
-    transition: opacity 0.15s, transform .1s;
-  }
-  .btn-scan:disabled { opacity: 0.3; cursor: not-allowed; }
-  .btn-scan:active:not(:disabled) { transform: scale(0.98); background: var(--amber-deep); }
-
-  /* LOADING ------------------------------------------------------- */
+  .gallery-fab:active { background: rgba(10,10,12,0.9); }
+ 
+  /* LOADING */
   .loading-state {
     text-align: center;
     padding: 18px 0 4px;
     display: none;
   }
   .loading-state p {
-    font-family:'IBM Plex Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.06em;
     color: var(--muted);
     text-transform: uppercase;
   }
-
-  /* RESULT --------------------------------------------------------- */
+ 
+  /* RESULT */
   .result-card {
     background: var(--surface);
     border: 1px solid var(--hairline);
@@ -301,24 +258,20 @@
     display: none;
     margin-top: 16px;
   }
-
   .result-label {
-    font-family:'IBM Plex Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 10.5px;
     color: var(--muted-2);
     text-transform: uppercase;
     letter-spacing: 0.14em;
     margin-bottom: 12px;
   }
-
   .plate-display {
     display: flex;
     align-items: stretch;
     gap: 10px;
     margin-bottom: 14px;
   }
-
-  /* plate-number styled as a real embossed plate */
   #plate-number {
     flex: 1;
     font-family: 'IBM Plex Mono', monospace;
@@ -333,11 +286,12 @@
     padding: 14px 10px;
     box-shadow: inset 0 0 0 3px #dcd8c9, inset 0 2px 3px rgba(0,0,0,0.15);
     outline: none;
+    width: 100%;
+    box-sizing: border-box;
   }
-  #plate-number:focus{ box-shadow: inset 0 0 0 3px var(--amber-deep), inset 0 2px 3px rgba(0,0,0,0.15); }
-
+  #plate-number:focus { box-shadow: inset 0 0 0 3px var(--amber-deep), inset 0 2px 3px rgba(0,0,0,0.15); }
   .confidence-badge {
-    font-family:'IBM Plex Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 10.5px;
     padding: 4px 10px;
     border-radius: 20px;
@@ -345,59 +299,71 @@
     align-self: flex-start;
     white-space: nowrap;
   }
-
-  .conf-alta { background: rgba(53,208,127,0.1); color: var(--green); }
+  .conf-alta  { background: rgba(53,208,127,0.1); color: var(--green); }
   .conf-media { background: rgba(255,197,61,0.1); color: var(--amber); }
-  .conf-baja { background: rgba(255,92,92,0.1); color: var(--red); }
-
+  .conf-baja  { background: rgba(255,92,92,0.1);  color: var(--red);   }
   .notes-section {
     border-top: 1px solid var(--hairline);
     padding-top: 12px;
+    margin-bottom: 14px;
   }
-
   .notes-label {
-    font-family:'IBM Plex Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--muted-2);
     margin-bottom: 5px;
   }
-
   .notes-text {
     font-size: 13px;
     color: var(--muted);
     line-height: 1.5;
   }
-
+ 
+  /* BOTONES DE ACCIÓN */
+  .action-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  #nueva-captura-btn {
+    flex: 1;
+    padding: 14px;
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #nueva-captura-btn:active { opacity: 0.8; }
   #confirm-btn {
-    display:none;
-    width:100%;
+    flex: 2;
     padding: 14px;
     background: var(--green);
     color: #0a1f13;
     border: none;
     border-radius: 10px;
-    font-family:'Oswald', sans-serif;
+    font-family: 'Oswald', sans-serif;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.03em;
     text-transform: uppercase;
-    margin-top: 14px;
     cursor: pointer;
+    display: none;
     -webkit-tap-highlight-color: transparent;
   }
-  #confirm-btn:active{ transform: scale(0.98); }
-
-  #scan-btn.retry{
-    background: var(--surface-2);
-    color: var(--text);
-    border: 1px solid var(--hairline);
-  }
-
-  /* LOG --------------------------------------------------------- */
+  #confirm-btn:active { transform: scale(0.98); }
+ 
+  /* LOG */
   .log-section { margin-top: 4px; }
-
   .log-entry {
     background: var(--surface);
     border: 1px solid var(--hairline);
@@ -409,35 +375,34 @@
     justify-content: space-between;
     align-items: center;
   }
-
   .log-plate {
-    font-family:'IBM Plex Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 15px;
     font-weight: 600;
     letter-spacing: 0.08em;
   }
   .log-time {
-    font-family:'IBM Plex Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 10.5px;
     color: var(--muted-2);
   }
-
+ 
   input[type="file"] { display: none; }
 </style>
 </head>
 <body>
-
+ 
 <div class="header">
   <div class="header-icon">🚗</div>
   <div>
-    <h1>LPR Test</h1>
-    <p>Lector de placas · Pruebas iPhone</p>
+    <h1>LPR Carwash</h1>
+    <p>Lector de placas</p>
   </div>
   <div class="status-dot" id="status-dot"></div>
 </div>
-
+ 
 <div class="content">
-
+ 
   <!-- API KEY -->
   <div class="eyebrow">Conexión</div>
   <div class="api-section">
@@ -447,7 +412,7 @@
     </div>
     <div class="api-status" id="api-status"></div>
   </div>
-
+ 
   <!-- VIEWFINDER -->
   <div class="eyebrow">Escáner</div>
   <div class="viewfinder" id="viewfinder" onclick="document.getElementById('camera-input').click()">
@@ -458,24 +423,19 @@
     <div class="vf-hint" id="vf-hint">Toca para escanear una placa</div>
     <div class="gallery-fab" onclick="event.stopPropagation(); document.getElementById('gallery-input').click()">🖼</div>
   </div>
-
+ 
   <label style="display:none">
     <input type="file" accept="image/*" capture="environment" id="camera-input" />
   </label>
   <label style="display:none">
     <input type="file" accept="image/*" id="gallery-input" />
   </label>
-
-  <!-- SCAN BUTTON (fallback / retry) -->
-  <button class="btn-scan" id="scan-btn" disabled onclick="scanPlate()">
-    Analizar imagen
-  </button>
-
+ 
   <!-- LOADING -->
   <div class="loading-state" id="loading">
     <p>Leyendo placa con IA...</p>
   </div>
-
+ 
   <!-- RESULT -->
   <div class="result-card" id="result-card">
     <div class="result-label">Placa detectada</div>
@@ -487,29 +447,33 @@
       <div class="notes-label">Observaciones</div>
       <div class="notes-text" id="notes-text"></div>
     </div>
-    <button id="confirm-btn" onclick="registrarPlaca()">Confirmar y registrar</button>
+    <div class="action-row">
+      <button id="nueva-captura-btn" onclick="nuevaCaptura()">Nueva captura</button>
+      <button id="confirm-btn" onclick="registrarPlaca()">Confirmar y registrar</button>
+    </div>
   </div>
-
+ 
   <!-- LOG -->
   <div class="log-section" id="log-section" style="display:none;">
-    <div class="eyebrow" style="margin-top:26px;">Historial de pruebas</div>
+    <div class="eyebrow" style="margin-top:26px;">Historial</div>
     <div id="log-list"></div>
   </div>
-
+ 
 </div>
-
+ 
 <script>
   let imageBase64 = null;
+  let isSubmitting = false;
   let apiKey = localStorage.getItem('lpr_api_key') || 'sk-ant-api03-GRO...2gAA';
   const log = [];
-
+ 
   if (apiKey) {
     document.getElementById('api-key').value = apiKey;
     document.getElementById('api-status').textContent = '✓ API key guardada';
     document.getElementById('api-status').className = 'api-status ok';
     document.getElementById('status-dot').classList.add('on');
   }
-
+ 
   function saveKey() {
     const val = document.getElementById('api-key').value.trim();
     if (!val.startsWith('sk-ant-')) {
@@ -524,10 +488,10 @@
     document.getElementById('api-status').className = 'api-status ok';
     document.getElementById('status-dot').classList.add('on');
   }
-
-  const MAX_DIM = 1000;      // ancho/alto máximo en px antes de mandar a la API
-  const JPEG_QUALITY = 0.72; // calidad de compresión (0-1)
-
+ 
+  const MAX_DIM = 1000;
+  const JPEG_QUALITY = 0.72;
+ 
   function compressImage(dataUrl) {
     return new Promise((resolve) => {
       const img = new Image();
@@ -546,64 +510,46 @@
         canvas.getContext('2d').drawImage(img, 0, 0, width, height);
         resolve(canvas.toDataURL('image/jpeg', JPEG_QUALITY));
       };
-      img.onerror = () => resolve(dataUrl); // si algo falla, se usa la original sin comprimir
+      img.onerror = () => resolve(dataUrl);
       img.src = dataUrl;
     });
   }
-
+ 
   function handleFile(file) {
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = async (e) => {
-    const compressedDataUrl = await compressImage(e.target.result);
-    imageBase64 = compressedDataUrl.split(',')[1];
-    const img = document.getElementById('preview-img');
-    img.src = compressedDataUrl;
-    img.style.display = 'block';
-    document.getElementById('viewfinder').classList.add('has-image');
-    document.getElementById('vf-hint').textContent = 'Toca para volver a tomar la foto';
-    document.getElementById('scan-btn').disabled = false;
-    document.getElementById('result-card').style.display = 'none';
-
-    // NUEVO: mandar foto al backend inmediatamente sin esperar IA
-    const btn = document.getElementById('confirm-btn');
-    btn.style.display = 'none';
-
-    fetch('https://proapps-backend-production.up.railway.app/api/registros/foto', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imagen: imageBase64 })
-    })
-    .then(r => r.json())
-    .then(data => {
-      console.log('Foto enviada, folio:', data.folio)
-      // Ahora sí analizar la placa con IA
-      scanPlate()
-    })
-    .catch(err => {
-      console.error('Error enviando foto:', err)
-      // Si falla el backend, igual analiza la placa
-      scanPlate()
-    })
-  };
-  reader.readAsDataURL(file);
-}
-
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const compressedDataUrl = await compressImage(e.target.result);
+      imageBase64 = compressedDataUrl.split(',')[1];
+ 
+      const img = document.getElementById('preview-img');
+      img.src = compressedDataUrl;
+      img.style.display = 'block';
+      document.getElementById('viewfinder').classList.add('has-image');
+      document.getElementById('vf-hint').textContent = 'Toca para volver a tomar la foto';
+      document.getElementById('result-card').style.display = 'none';
+      document.getElementById('confirm-btn').style.display = 'none';
+      document.getElementById('nueva-captura-btn').style.display = 'none';
+ 
+      scanPlate();
+    };
+    reader.readAsDataURL(file);
+  }
+ 
   document.getElementById('camera-input').addEventListener('change', e => handleFile(e.target.files[0]));
   document.getElementById('gallery-input').addEventListener('change', e => handleFile(e.target.files[0]));
-
+ 
   async function scanPlate() {
     if (!imageBase64) return;
     if (!apiKey) {
       alert('Primero guarda tu API key de Anthropic');
       return;
     }
-
+ 
     document.getElementById('result-card').style.display = 'none';
     document.getElementById('loading').style.display = 'block';
     document.getElementById('scan-line').classList.add('active');
-    document.getElementById('scan-btn').disabled = true;
-
+ 
     try {
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -614,7 +560,7 @@
           'anthropic-dangerous-direct-browser-access': 'true'
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-5',          
+          model: 'claude-sonnet-4-5',
           max_tokens: 500,
           system: 'Eres un sistema especializado en reconocimiento de placas vehiculares de México. Analiza la imagen y extrae el número de placa. Responde SOLO en JSON sin backticks ni texto extra: {"plate":"TEXTO_PLACA","confidence":"alta|media|baja","notes":"observación breve en español"}. Si no hay placa visible: {"plate":"NO_DETECTADA","confidence":"baja","notes":"No se encontró placa en la imagen"}.',
           messages: [{
@@ -626,106 +572,93 @@
           }]
         })
       });
-
+ 
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error?.message || 'Error en API');
-      }
-
+      if (!res.ok) throw new Error(data.error?.message || 'Error en API');
+ 
       const raw = data.content?.find(b => b.type === 'text')?.text || '';
       const parsed = JSON.parse(raw.replace(/```json|```/g, '').trim());
-
+ 
       document.getElementById('loading').style.display = 'none';
       document.getElementById('scan-line').classList.remove('active');
       document.getElementById('result-card').style.display = 'block';
       document.getElementById('plate-number').value = parsed.plate.replace(/[-\s]/g, '').toUpperCase() || '';
       document.getElementById('notes-text').textContent = parsed.notes || '';
+ 
       isSubmitting = false;
       const confirmBtn = document.getElementById('confirm-btn');
       confirmBtn.disabled = false;
       confirmBtn.textContent = 'Confirmar y registrar';
       confirmBtn.style.display = 'block';
-      document.getElementById('scan-btn').textContent = 'Nueva captura';
-      document.getElementById('scan-btn').classList.add('retry');
-      document.getElementById('scan-btn').onclick = () => {
-       imageBase64 = null;
-     document.getElementById('preview-img').style.display = 'none';
-    document.getElementById('viewfinder').classList.remove('has-image');
-    document.getElementById('vf-hint').textContent = 'Toca para escanear una placa';
-    document.getElementById('result-card').style.display = 'none';
-    document.getElementById('scan-btn').textContent = 'Analizar imagen';
-    document.getElementById('scan-btn').classList.remove('retry');
-    document.getElementById('scan-btn').disabled = true;
-    document.getElementById('scan-btn').onclick = scanPlate;
-    isSubmitting = false;
-    document.getElementById('camera-input').click();
-    };
-
+      document.getElementById('nueva-captura-btn').style.display = 'block';
+ 
       const badge = document.getElementById('conf-badge');
       const conf = parsed.confidence || 'baja';
       badge.textContent = conf === 'alta' ? '✓ Alta' : conf === 'media' ? '⚠ Media' : '✗ Baja';
       badge.className = 'confidence-badge conf-' + conf;
-
+ 
       if (parsed.plate && parsed.plate !== 'NO_DETECTADA') {
         const now = new Date();
         const timeStr = now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
         log.unshift({ plate: parsed.plate, time: timeStr, conf });
         renderLog();
       }
-
+ 
     } catch (err) {
       document.getElementById('loading').style.display = 'none';
       document.getElementById('scan-line').classList.remove('active');
       document.getElementById('result-card').style.display = 'block';
       document.getElementById('plate-number').value = 'ERROR';
       document.getElementById('conf-badge').textContent = '';
-      document.getElementById('notes-text').textContent = 'Detalle: ' + JSON.stringify(err.message) + ' | tipo: ' + err.name;
+      document.getElementById('notes-text').textContent = 'Detalle: ' + err.message + ' | tipo: ' + err.name;
+      document.getElementById('nueva-captura-btn').style.display = 'block';
     }
-
-    document.getElementById('scan-btn').disabled = false;
   }
-
-  let isSubmitting = false;
-
+ 
+  function nuevaCaptura() {
+    imageBase64 = null;
+    isSubmitting = false;
+    document.getElementById('preview-img').style.display = 'none';
+    document.getElementById('viewfinder').classList.remove('has-image');
+    document.getElementById('vf-hint').textContent = 'Toca para escanear una placa';
+    document.getElementById('result-card').style.display = 'none';
+    document.getElementById('confirm-btn').style.display = 'none';
+    document.getElementById('nueva-captura-btn').style.display = 'none';
+    document.getElementById('camera-input').click();
+  }
+ 
   function registrarPlaca() {
-    if (isSubmitting) return; // ya se está enviando o ya se envió: ignora toques repetidos
-
-    const placa = document.getElementById('plate-number').value.trim().toUpperCase()
+    if (isSubmitting) return;
+ 
+    const placa = document.getElementById('plate-number').value.trim().toUpperCase();
     if (!placa) {
-      alert('La placa está vacía')
-      return
+      alert('La placa está vacía');
+      return;
     }
-
+ 
     const btn = document.getElementById('confirm-btn');
     isSubmitting = true;
     btn.disabled = true;
     btn.textContent = 'Enviando...';
-
+ 
     fetch('https://proapps-backend-production.up.railway.app/api/registros/placa', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        placa,
-        imagen: imageBase64 || ''
-      })
+      body: JSON.stringify({ placa, imagen: imageBase64 || '' })
     })
     .then(r => r.json())
     .then(data => {
-      alert('✅ ' + data.mensaje)
       btn.textContent = 'Registrada ✓';
-      btn.style.display = 'none'
-      // isSubmitting queda en true: ya no se puede reenviar este registro
+      btn.style.display = 'none';
     })
     .catch(err => {
-      alert('❌ Error: ' + err.message)
-      // fue error de red/servidor, no de duplicado: se permite reintentar
+      alert('❌ Error: ' + err.message);
       isSubmitting = false;
       btn.disabled = false;
       btn.textContent = 'Confirmar y registrar';
-    })
+    });
   }
-
+ 
   function renderLog() {
     if (log.length === 0) return;
     document.getElementById('log-section').style.display = 'block';
