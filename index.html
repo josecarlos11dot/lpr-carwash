@@ -552,23 +552,42 @@
   }
 
   function handleFile(file) {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const compressedDataUrl = await compressImage(e.target.result);
-      imageBase64 = compressedDataUrl.split(',')[1];
-      const img = document.getElementById('preview-img');
-      img.src = compressedDataUrl;
-      img.style.display = 'block';
-      document.getElementById('viewfinder').classList.add('has-image');
-      document.getElementById('vf-hint').textContent = 'Toca para volver a tomar la foto';
-      document.getElementById('scan-btn').disabled = false;
-      document.getElementById('result-card').style.display = 'none';
-      // one-tap flow: analyze immediately, no extra taps needed
-      scanPlate();
-    };
-    reader.readAsDataURL(file);
-  }
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const compressedDataUrl = await compressImage(e.target.result);
+    imageBase64 = compressedDataUrl.split(',')[1];
+    const img = document.getElementById('preview-img');
+    img.src = compressedDataUrl;
+    img.style.display = 'block';
+    document.getElementById('viewfinder').classList.add('has-image');
+    document.getElementById('vf-hint').textContent = 'Toca para volver a tomar la foto';
+    document.getElementById('scan-btn').disabled = false;
+    document.getElementById('result-card').style.display = 'none';
+
+    // NUEVO: mandar foto al backend inmediatamente sin esperar IA
+    const btn = document.getElementById('confirm-btn');
+    btn.style.display = 'none';
+
+    fetch('https://feeb-187-189-88-39.ngrok-free.app/api/registros/foto', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ imagen: imageBase64 })
+    })
+    .then(r => r.json())
+    .then(data => {
+      console.log('Foto enviada, folio:', data.folio)
+      // Ahora sí analizar la placa con IA
+      scanPlate()
+    })
+    .catch(err => {
+      console.error('Error enviando foto:', err)
+      // Si falla el backend, igual analiza la placa
+      scanPlate()
+    })
+  };
+  reader.readAsDataURL(file);
+}
 
   document.getElementById('camera-input').addEventListener('change', e => handleFile(e.target.files[0]));
   document.getElementById('gallery-input').addEventListener('change', e => handleFile(e.target.files[0]));
