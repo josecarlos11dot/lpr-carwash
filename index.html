@@ -569,7 +569,7 @@
     const btn = document.getElementById('confirm-btn');
     btn.style.display = 'none';
 
-    fetch('https://feeb-187-189-88-39.ngrok-free.app/api/registros/foto', {
+    fetch('https://proapps-backend-production.up.railway.app/api/registros/foto', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ imagen: imageBase64 })
