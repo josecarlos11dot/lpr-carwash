@@ -646,8 +646,21 @@
       confirmBtn.disabled = false;
       confirmBtn.textContent = 'Confirmar y registrar';
       confirmBtn.style.display = 'block';
-      document.getElementById('scan-btn').textContent = 'Volver a analizar';
+      document.getElementById('scan-btn').textContent = 'Nueva captura';
       document.getElementById('scan-btn').classList.add('retry');
+      document.getElementById('scan-btn').onclick = () => {
+       imageBase64 = null;
+     document.getElementById('preview-img').style.display = 'none';
+    document.getElementById('viewfinder').classList.remove('has-image');
+    document.getElementById('vf-hint').textContent = 'Toca para escanear una placa';
+    document.getElementById('result-card').style.display = 'none';
+    document.getElementById('scan-btn').textContent = 'Analizar imagen';
+    document.getElementById('scan-btn').classList.remove('retry');
+    document.getElementById('scan-btn').disabled = true;
+    document.getElementById('scan-btn').onclick = scanPlate;
+    isSubmitting = false;
+    document.getElementById('camera-input').click();
+    };
 
       const badge = document.getElementById('conf-badge');
       const conf = parsed.confidence || 'baja';
