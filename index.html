@@ -648,9 +648,16 @@
     })
     .then(r => r.json())
     .then(data => {
-      btn.textContent = 'Registrada ✓';
-      btn.style.display = 'none';
-    })
+  if (data.yaRegistrada) {
+    alert(data.mensaje)
+    btn.textContent = 'Confirmar y registrar'
+    btn.disabled = false
+    isSubmitting = false
+    return
+  }
+  btn.textContent = 'Registrada ✓'
+  btn.style.display = 'none'
+})
     .catch(err => {
       alert('❌ Error: ' + err.message);
       isSubmitting = false;
